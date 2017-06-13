@@ -1,0 +1,2 @@
+# This file contains all non-dominated populations of all generations.
+# Format: RS# , Cum. Gen , Index , From Gen. ,From NFE , Objectives = 2 , Constraint = 0 , Constraint = 1 ,  Real Variables = 59 , Constrainty Violation , Rank , Crowding Distance

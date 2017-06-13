@@ -1,0 +1,78 @@
+# This file contains information about inputs as read by the program
+
+Population size: initial<10000>; min<10000>; max<1000000>
+Population scaling factor <0.000000>
+Number of objective functions = 2
+Number of constraints = 2
+Number of real variables = 59
+  variable<1>; lower<0.000000>; upper<1.000000>
+  variable<2>; lower<0.000000>; upper<1.000000>
+  variable<3>; lower<0.000000>; upper<1.000000>
+  variable<4>; lower<0.000000>; upper<1.000000>
+  variable<5>; lower<0.000000>; upper<1.000000>
+  variable<6>; lower<0.000000>; upper<1.000000>
+  variable<7>; lower<0.000000>; upper<1.000000>
+  variable<8>; lower<0.000000>; upper<1.000000>
+  variable<9>; lower<0.000000>; upper<1.000000>
+  variable<10>; lower<0.000000>; upper<1.000000>
+  variable<11>; lower<0.000000>; upper<1.000000>
+  variable<12>; lower<0.000000>; upper<1.000000>
+  variable<13>; lower<0.000000>; upper<1.000000>
+  variable<14>; lower<0.000000>; upper<1.000000>
+  variable<15>; lower<0.000000>; upper<1.000000>
+  variable<16>; lower<0.000000>; upper<1.000000>
+  variable<17>; lower<0.000000>; upper<1.000000>
+  variable<18>; lower<0.000000>; upper<1.000000>
+  variable<19>; lower<0.000000>; upper<1.000000>
+  variable<20>; lower<0.000000>; upper<1.000000>
+  variable<21>; lower<0.000000>; upper<1.000000>
+  variable<22>; lower<0.000000>; upper<1.000000>
+  variable<23>; lower<0.000000>; upper<1.000000>
+  variable<24>; lower<0.000000>; upper<1.000000>
+  variable<25>; lower<0.000000>; upper<1.000000>
+  variable<26>; lower<0.000000>; upper<1.000000>
+  variable<27>; lower<0.000000>; upper<1.000000>
+  variable<28>; lower<0.000000>; upper<1.000000>
+  variable<29>; lower<0.000000>; upper<1.000000>
+  variable<30>; lower<0.000000>; upper<1.000000>
+  variable<31>; lower<0.000000>; upper<1.000000>
+  variable<32>; lower<0.000000>; upper<1.000000>
+  variable<33>; lower<0.000000>; upper<1.000000>
+  variable<34>; lower<0.000000>; upper<1.000000>
+  variable<35>; lower<0.000000>; upper<1.000000>
+  variable<36>; lower<0.000000>; upper<1.000000>
+  variable<37>; lower<0.000000>; upper<1.000000>
+  variable<38>; lower<0.000000>; upper<1.000000>
+  variable<39>; lower<0.000000>; upper<1.000000>
+  variable<40>; lower<0.000000>; upper<1.000000>
+  variable<41>; lower<0.000000>; upper<1.000000>
+  variable<42>; lower<0.000000>; upper<1.000000>
+  variable<43>; lower<0.000000>; upper<1.000000>
+  variable<44>; lower<0.000000>; upper<1.000000>
+  variable<45>; lower<0.000000>; upper<1.000000>
+  variable<46>; lower<0.000000>; upper<1.000000>
+  variable<47>; lower<0.000000>; upper<1.000000>
+  variable<48>; lower<0.000000>; upper<1.000000>
+  variable<49>; lower<0.000000>; upper<1.000000>
+  variable<50>; lower<0.000000>; upper<1.000000>
+  variable<51>; lower<0.000000>; upper<1.000000>
+  variable<52>; lower<0.000000>; upper<1.000000>
+  variable<53>; lower<0.000000>; upper<1.000000>
+  variable<54>; lower<0.000000>; upper<1.000000>
+  variable<55>; lower<0.000000>; upper<1.000000>
+  variable<56>; lower<0.000000>; upper<1.000000>
+  variable<57>; lower<0.000000>; upper<1.000000>
+  variable<58>; lower<0.000000>; upper<1.000000>
+  variable<59>; lower<0.000000>; upper<1.000000>
+Probability of crossover of real variable = 1.000000
+Probability of mutation of real variable = 0.005200
+Distribution index for crossover = 0.000000
+Distribution index for mutation = 0.000000
+Number of binary variables = 0
+random seed index min<0>;max<0>
+number of epsilons <2>
+  epsilon <0.000100>; index <0>
+  epsilon <0.000100>; index <1>
+using INTER run <0>; delta <10.000000>
+using INTRA run <0>; delta <0.000000>
+Test Problem <entropy0>

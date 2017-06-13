@@ -1,0 +1,216 @@
+<configuration>
+	<license> </license>
+	<parallel> serial </parallel>                					<!-- #options: serial, ms, mp -->
+	<debug_mode> on </debug_mode>                 					<!-- #debug mode -->
+
+	<use_hboa> on </use_hboa>                    					<!-- #flag to use hBOA code within eNSGAII -->
+
+	<!-- ********************************
+	#Population sizing
+	********************************
+
+	#Important: population sizes always have to be a multiple of 4 -->
+
+	<initial_popsize> 10000 </initial_popsize>             			<!-- #initial population size -->
+	<min_popsize> 10000 </min_popsize>                 				<!--  #minimum population size -->
+	<max_popsize> 100000 </max_popsize>              				<!-- #maximum population size -->
+	<popsize_scheme> injection </popsize_scheme>        			<!-- #options: injection | scaling -->
+	<pop_scaling_factor> 0.25 </pop_scaling_factor>        			<!-- #options: integer for scaling, 0 to 1 for injection -->
+	<max_gens> 396 </max_gens>                    					<!-- #maximum number of generations -->
+
+	<!-- #NOTES: You can set the min and max population sizes to be the same to achieve static population sizing
+	#Alternatively, you can also set the number of generations really high to eliminate connected runs
+	#If restarting, you can set the injection rate to 1.0 to ensure that your initial population size matches the 
+	#size of the restart archive and contains only 100% restart solutions
+
+	********************************
+	#Design objectives
+	******************************** -->
+
+	<nobj> 3 </nobj>                         						<!-- #number of design objectives -->
+	<obj_tag1> Ctotal </obj_tag1>
+	<obj_val1> min </obj_val1>
+	<obj_eps1> 0.0001 </obj_eps1>
+	<obj_tag2> Hjoint </obj_tag2>
+	<obj_val2> max </obj_val2>
+	<obj_eps2> 0.0001 </obj_eps2>
+	<obj_tag3> Signatures </obj_tag3>
+	<obj_val3> max </obj_val3>
+	<obj_eps3> 10 </obj_eps3>
+
+
+	<ncons> 7 </ncons>                         					<!-- #number of constraints -->
+	<con_num1> 15 </con_num1>
+	<con_tot1> 15 </con_tot1>
+	<con_ind1> hard </con_ind1>
+	<con_num2> 0 </con_num2>
+	<con_tot2> 83 </con_tot2>
+	<con_ind2> hard </con_ind2>
+	<con_num3> 4 </con_num3>
+	<con_tot3> 26 </con_tot3> 
+	<con_ind3> hard </con_ind3>
+	<con_num4> 5 </con_num4>
+	<con_tot4> 5 </con_tot4>
+	<con_ind4> hard </con_ind4>
+	<con_num5> 1 </con_num5>
+	<con_tot5> 53 </con_tot5>
+	<con_ind5> hard </con_ind5>
+	<con_num6> 2 </con_num6> 
+	<con_tot6> 2 </con_tot6>
+	<con_ind6> hard </con_ind6>
+	<con_num7> 1 </con_num7>
+	<con_tot7> 14 </con_tot7>
+	<con_ind7> hard </con_ind7>
+
+
+	<!-- ********************************
+	#Real decision variables
+	******************************** -->
+
+	<nreal> 198 </nreal>                      						<!--  #number of real decision variables; jos:(nstation-1) -->
+	<real_psuedo_binary> on </real_psuedo_binary>         			<!-- #flag to turn on psuedo-binary implementation for real variables -->
+	<dec_transform> 0 </dec_transform>
+	<real_limits> same </real_limits>              					<!-- #options: same, different -->
+	<real_tag1> none </real_tag1> 
+	<real_min1> 0.0 </real_min1>
+	<real_max1> 1.0 </real_max1>
+	<real_cross_prob> 1.0 </real_cross_prob>             			<!-- #crossover probability for real variables (0.6-1.0) -->
+	<real_mut_prob> 0.0052 </real_mut_prob>              			<!-- #mutation probability for real variables (1/nreal) -->
+	<dist_index_sbx> 15 </dist_index_sbx>              				<!-- #distribution index for SBX crossover (5-20) -->
+	<dist_index_poly> 20 </dist_index_poly>             			<!-- #distribution index for polynomial mutation (5-50) -->
+
+	<!-- ********************************
+	#Binary decision variables
+	******************************** -->
+
+	<nbin> 1 </nbin>                         						<!-- #number of binary variables -->
+	<bin_limits> same </bin_limits>           						<!-- #options: same, different -->
+	--------------------------------
+
+	<bin_tag1> none </bin_tag1>
+	<bin_bit1> 1 </bin_bit1>
+	<bin_min1> 0 </bin_min1>
+	<bin_max1> 1 </bin_max1>
+
+	--------------------------------
+	<bin_cross_prob> 0.8 </bin_cross_prob>							<!-- #binary crossover probability -->
+	<bin_cross_type> one_point </bin_cross_type>        			<!-- #options: one_point, two_point, uniform -->
+	<bin_mut_prob> 0.04 </bin_mut_prob>              				<!-- #binary mutation probability -->
+	<bin_mut_type> independent </bin_mut_type>            			<!-- #options: one_bit, independent -->
+
+	<!-- ********************************
+	#Soft termination criteria
+	******************************** -->
+
+	<inter_run> off </inter_run>                   					<!-- #termination across runs -->
+	<inter_delta> 10 </inter_delta>                 				<!-- #percent change criteria for inter-run termination -->
+	<intra_run> off </intra_run>                  					<!-- #termination within a run -->
+	<intra_delta> 10 </intra_delta>                  				<!-- #percent change criteria for intra-run termination -->
+	<init_lag_win> 10 </init_lag_win>                				<!-- #initial generation lag window across which to evaluate intra-run termination -->
+	<init_lag_win_runs> 1 </init_lag_win_runs>             			<!-- #number of runs to use the initial generational lag window -->
+	<final_lag_win> 10 </final_lag_win>               				<!-- #final generational lag window across which to evaluate intra-run termination -->
+
+	<!-- ********************************
+	#Hard termination criteria
+	******************************** -->
+
+	<max_nfe> 1000000 </max_nfe>               					<!-- #maximum number of function evaluations -->
+	<max_time> 10000.0 </max_time>                					<!-- #maximum elapsed time (hours.fractional) -->
+	<max_eperf> 0.85 </max_eperf>                					<!--  #maximum e-performance metric value -->
+
+	<!-- ********************************
+	#Performance metrics
+	******************************** -->
+
+	<conv> off </conv>                             	 			<!-- #convergence metric -->
+	<div> off </div>                                 				<!-- #diversity metric -->
+	<div_grid1> 12 </div_grid1>
+	<div_grid2> 12 </div_grid2>
+	<div_grid3> 12 </div_grid3>
+	<eperf> off </eperf>                           					<!-- #traditional epsilon-performance metric -->
+	<edom_eperf> off </edom_eperf>                         			<!-- #epsilon-dominance epsilon-performance metric -->
+	<eperf_eps1> 1.0 </eperf_eps1>
+	<eperf_eps2> 0.01 </eperf_eps2>
+	<eperf_eps3> 0.01 </eperf_eps3>
+	<eperf_eps4> 0.01 </eperf_eps4>
+
+	<eind> off </eind>                              				<!-- #epsilon-indicator metric (both additive and multiplicative are output) -->
+	<eind_error> 0.0001 </eind_error>                     			<!-- #error factor for epsilon-indicator metric -->
+	<metric_ref> none </metric_ref>   								<!-- #reference or target set file name for metric calculations -->
+
+	<!-- ********************************
+	#Random seed analysis
+	******************************** -->
+
+	<seed_range> 1 </seed_range>                					<!-- #random seed range to run -->
+
+	<!-- ********************************
+	#Local file output - used for serial, ms, and mp
+	******************************** -->
+
+	<out_dir> ./output_entropy_hboa_2006-2010 </out_dir>        	<!-- #output directory -->
+	<out_headers> on </out_headers>                					<!-- #tells whether to write headers in output files - options: on, off -->
+	<out_all> 5 </out_all>                   						<!-- #output all individuals at output interval -->
+	<out_nondom> 5 </out_nondom>               					<!-- #output nondominated individuals at output interval -->
+	<out_all_final> on </out_all_final>             				<!-- #output all individual in the final population -->
+	<out_nondom_final> on </out_nondom_final>             			<!-- #output all nondominated individuals in the final population -->
+	<out_stats> 5 </out_stats>                						<!--  #output run statistics and metric values at output interval -->
+	<out_rs> on </out_rs>                     						<!--  #output random seed summary -->
+	<out_timer> 5 </out_timer>                 						<!--  #output timer info at output interval -->
+	<out_vtk> 5 </out_vtk>             								<!-- #output vtk compatable file at interval.  Size options: small, large -->
+	<out_vtk_sflag> on </out_vtk_sflag>
+
+<!-- 	********************************
+	#Global file output - used for mp only
+	******************************** -->
+
+
+	<out_global_archive> 1 </out_global_archive>            		<!-- #output all global archive individuals at output interval -->
+	<out_invoke_info> 1 </out_invoke_info>                			<!-- #output all invoke information at output interval -->
+	<out_global_archive_final> on </out_global_archive_final>		<!-- #output all global archive individuals at the end of the run -->
+	<out_global_stats> 1 </out_global_stats>              			<!-- #output global run statistics and metric values at output interval -->
+	<out_global_rs> on </out_global_rs>                   			<!-- #output global random seed summary -->
+
+	<!-- ********************************
+	#Test problem
+	******************************** -->
+
+	<test_problem> entropy0 </test_problem>           				<!--  #name of test problem to run -->
+	<restart_file> none </restart_file>              				<!-- #name of restart file -->
+
+
+
+<!-- 	###############################
+	#e-hBOA Parameters:
+	############################### -->
+
+	<print_model> on </print_model>                   				<!-- #flag to print the model file while using e-hBOA. Default is off. -->
+	<model_init_generations> 10000 </model_init_generations>        <!-- #output the models for the specified number of initial generations. Default is 10. -->
+	<model_all> 50000 </model_all>                       			<!-- #output all the models at the specified interval of generations. Deafult is 10. -->
+
+
+<!-- 	###############################
+	#DEMO Parameters:
+	############################### -->
+
+
+	<ndata> 1825 </ndata>   <!-- #length of timeseries -->
+
+<!-- 		# Include data to place as additional objective function information. The file should be names
+		# add_objectives.in, and should be a [Nn X nstation] array. The format for the file should have
+		# the first n1 lines as part of additional objective 1, n2 lines part of additional objective 2
+		# and so on. These can be cost, streamflow signatures, IHA's, etc. The number of lines and type
+		# of objective are specified in begin_additional_objectives. The format for this should be
+		# nlines   Objective_ID. The objective IDs are 1-Euclidean Distance, 2-Sum, Others to be added.
+		# For example if you had 3 streamflow signatures and 3 IHAs and you wanted each as an additional
+		# objective of the total Euclidean distance you would have num_additional_objectives = 2 and 
+		# begin_additional_objectives as :
+		# 3  1
+		# 3  1 -->
+	<num_additional_objectives> 1 </num_additional_objectives>
+	<aobj1_1> 3 </aobj1_1>
+	<aobj1_2> 1 </aobj1_2>
+
+</configuration>
+
+

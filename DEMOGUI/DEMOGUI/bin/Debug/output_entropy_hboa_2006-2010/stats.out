@@ -1,0 +1,4 @@
+# This file contains the statistics and performance metric results of the run.
+# Format: RS# , Run , Gen , Cum. Gen , Popsize , Archive , NFE , Quality ,Time (sec)
+    0	    1	     1	      1	  10000	      0	     20000	 0.00	 62.707000
+    0	    1	     5	      5	  10000	      0	     60000	 0.00	186.541000
