@@ -1,0 +1,3 @@
+# This file contains a summary of the statistics and performance metric results for the random seed analysis.
+# Format: RS# , Seed , Run , Cum. Gen , Popsize , Archive , NFE , Time (sec)
+    0	0.702	    1	      9	  10000	      0	    100000	198.888000
