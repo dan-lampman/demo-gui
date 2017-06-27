@@ -1,36 +1,81 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <parallel> serial </parallel>
-  <initial_popsize> 0 </initial_popsize>
-  <min_popsize> 0 </min_popsize>
-  <max_popsize> 0 </max_popsize>
-  <pop_scaling_factor> 0 </pop_scaling_factor>
-  <max_gens> 0 </max_gens>
-  <nobj> 0 </nobj>
+  <linearInput></linearInput>
+  <license> ZGFuLmxhbXBtYW5AZ21haWwuY29tdGV0aHlzKjIwMTYtMDEtMTI= </license>
+  <entropyDir> </entropyDir>
+  <objDir> </objDir>
+  <debug_mode> on </debug_mode>
+  <use_hboa> on </use_hboa>
+  <initial_popsize> 10000 </initial_popsize>
+  <min_popsize> 10000 </min_popsize>
+  <max_popsize> 1000000 </max_popsize>
+  <popsize_scheme> injection </popsize_scheme>
+  <pop_scaling_factor> 0.25 </pop_scaling_factor>
+  <max_gens> 1000000 </max_gens>
+  <test_problem> entropy0 </test_problem>
+  <nobj> 2 </nobj>
+  <obj_tag1> Ctotal </obj_tag1>
+  <obj_val1> min </obj_val1>
+  <obj_eps1> 0.0001 </obj_eps1>
+  <obj_tag2> HJoint </obj_tag2>
+  <obj_val2> max </obj_val2>
+  <obj_eps2> 0.0001 </obj_eps2>
   <num_additional_objectives> 0 </num_additional_objectives>
-  <ncons> 0 </ncons>
-  <nreal> 0 </nreal>
-  <real_cross_prob> 0 </real_cross_prob>
-  <real_mut_prob> 0 </real_mut_prob>
+  <ncons> 2 </ncons>
+  <con_num1> 47 </con_num1>
+  <con_tot1> 47 </con_tot1>
+  <con_ind1> hard </con_ind1>
+  <con_num2> 2 </con_num2>
+  <con_tot2> 12 </con_tot2>
+  <con_ind2> hard </con_ind2>
+  <nreal> 59 </nreal>
+  <real_pseudo_binary> on </real_pseudo_binary>
+  <real_limits> same </real_limits>
+  <real_tag1> none </real_tag1>
+  <real_min1> 0 </real_min1>
+  <real_max1> 1 </real_max1>
+  <real_cross_prob> 1 </real_cross_prob>
+  <real_mut_prob> 0.0052 </real_mut_prob>
   <dist_index_sbx> 0 </dist_index_sbx>
-  <dist_index_poly> 0 </dist_index_poly>
+  <dist_index_poly> 20 </dist_index_poly>
   <nbin> 0 </nbin>
-  <bin_limits> different </bin_limits>
-  <bin_cross_prob> 0 </bin_cross_prob>
-  <bin_mut_prob> 0 </bin_mut_prob>
+  <bin_limits> same </bin_limits>
+  <bin_cross_prob> 0.8 </bin_cross_prob>
+  <bin_cross_type> one_point </bin_cross_type>
+  <bin_mut_prob> 0.04 </bin_mut_prob>
+  <bin_mut_type> independent </bin_mut_type>
+  <inter_run> off </inter_run>
+  <inter_delta> 10 </inter_delta>
+  <intra_run> off </intra_run>
   <inter_delta> 0 </inter_delta>
-  <inter_delta> 0 </inter_delta>
-  <max_nfe> 0 </max_nfe>
-  <max_time> 0 </max_time>
-  <max_eperf> 0 </max_eperf>
-  <eind_error> 0 </eind_error>
-  <out_all> 0 </out_all>
-  <out_nondom> 0 </out_nondom>
-  <out_all_final> off </out_all_final>
-  <out_nondom_final> off </out_nondom_final>
-  <out_stats> 0 </out_stats>
-  <out_rs> off </out_rs>
-  <out_timer> 0 </out_timer>
-  <out_vtk> 0 </out_vtk>
-  <ndata> 0 </ndata>
+  <max_nfe> 100000 </max_nfe>
+  <max_time> 1000000 </max_time>
+  <max_eperf> 0.85 </max_eperf>
+  <conv> off </conv>
+  <div> off </div>
+  <eperf> off </eperf>
+  <edom_eperf> off </edom_eperf>
+  <div_grid1> 12 </div_grid1>
+  <div_grid2> 12 </div_grid2>
+  <div_grid3> 12 </div_grid3>
+  <eperf_eps1> 1 </eperf_eps1>
+  <eperf_eps2> 0.01 </eperf_eps2>
+  <eperf_eps3> 0.01 </eperf_eps3>
+  <eperf_eps4> 0.01 </eperf_eps4>
+  <eind> off </eind>
+  <eind_error> 0.0001 </eind_error>
+  <metric_ref> none </metric_ref>
+  <out_dir> ./output_entropy_hboa_2006-2010/ </out_dir>
+  <out_headers> on </out_headers>
+  <out_all> 5 </out_all>
+  <out_nondom> 5 </out_nondom>
+  <out_all_final> on </out_all_final>
+  <out_nondom_final> on </out_nondom_final>
+  <out_stats> 5 </out_stats>
+  <out_rs> on </out_rs>
+  <out_timer> 5 </out_timer>
+  <out_vtk> 5 </out_vtk>
+  <out_vtk_sflag> on </out_vtk_sflag>
+  <ndata> 144 </ndata>
 </configuration>
