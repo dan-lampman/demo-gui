@@ -37,6 +37,7 @@ namespace DEMOGUI
         public int numSelectedPoints;
         public string statsPath;
         public string outPath;
+        public bool existingConfig;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -65,8 +66,11 @@ namespace DEMOGUI
             demoWorker.WorkerReportsProgress = true;
             demoWorker.WorkerSupportsCancellation = true;
 
-            loadXml();
-            initForms();
+            loadXml(ref existingConfig);
+
+            if (existingConfig)
+                initForms();
+        
             verifyLicense(config.License);
 
             progressBar1.Style = ProgressBarStyle.Blocks;
@@ -80,8 +84,11 @@ namespace DEMOGUI
             toolTip.ReshowDelay = 500;
             toolTip.ShowAlways = true;
 
-            statsPath = System.IO.Directory.GetCurrentDirectory() + "\\" + config.OutDir.Remove(0,2).Replace("/","").Replace(" ","") + "\\stats.out";
-            outPath = System.IO.Directory.GetCurrentDirectory() + "\\" + config.OutDir.Remove(0, 2).Replace("/", "").Replace(" ", "") + "\\final_nondom_pop.out";
+            if (existingConfig)
+            {
+                statsPath = System.IO.Directory.GetCurrentDirectory() + "\\" + config.OutDir.Remove(0, 2).Replace("/", "").Replace(" ", "") + "\\stats.out";
+                outPath = System.IO.Directory.GetCurrentDirectory() + "\\" + config.OutDir.Remove(0, 2).Replace("/", "").Replace(" ", "") + "\\final_nondom_pop.out";
+            }
 
             //GMAP Settings
             gmap1.MapProvider = GoogleMapProvider.Instance;
@@ -865,10 +872,12 @@ namespace DEMOGUI
             }
         }
 
-        private void loadXml()
+        private void loadXml(ref bool existingConfig)
         {
             if (File.Exists("configuration.xml"))
             {
+                existingConfig = true;
+
                 try
                 {
                     var doc = XDocument.Load("configuration.xml");
@@ -1046,118 +1055,129 @@ namespace DEMOGUI
             }
             else
             {
+                existingConfig = false;
+                bool dummy = true;
                 config.SaveToXml();
-                loadXml();
+                loadXml(ref dummy);
             }
         }
 
         private void initForms()
         {
-            //txtBaseDebug.Text = config.Debug.Replace(" ", "");
-            txtLinear.Text = config.LinearInput.Replace(" ", "");
-            txtEntropyInput.Text = config.InputEntropyDir.Replace(" ", "");
-            txtObjInput.Text = config.InputObjDir.Replace(" ", "");
-            txtBaseHboa.Text = config.Hboa.Replace(" ", "");
-            txtBaseInitPop.Text = config.InitPop.ToString().Replace(" ", "");
-            txtBaseMaxGen.Text = config.MaxGens.ToString().Replace(" ", "");
-            txtBaseMaxPop.Text = config.MaxPop.ToString().Replace(" ", "");
-            txtBaseMinPop.Text = config.MinPop.ToString().Replace(" ", "");
-            txtBaseNumBin.Text = config.NBin.ToString().Replace(" ", "");
-            txtBaseNumConds.Text = config.NCons.ToString().Replace(" ", "");
-            txtBaseNumObj.Text = config.NObj.ToString().Replace(" ", "");
-            txtBaseNumReal.Text = config.NReal.ToString().Replace(" ", "");
-            txtBaseNumTag.Text = config.NTagAlong.ToString().Replace(" ", "");
-            txtBasePopFactor.Text = config.PopFactor.ToString().Replace(" ", "");
-            txtBasePopScheme.Text = config.PopScheme.Replace(" ", "");
-            txtTestProblem.Text = config.TestProblem;
+            // TODO add ternary logic for each statement
 
-            var list = new List<int>();
+            // this is not great
+            try
+            {
 
-            for (int i = 1; i <= config.NObj; i++)
-                list.Add(i);
+                //txtBaseDebug.Text = config.Debug.Replace(" ", "");
+                txtLinear.Text = config.LinearInput.Replace(" ", "");
+                txtEntropyInput.Text = config.InputEntropyDir.Replace(" ", "");
+                txtObjInput.Text = config.InputObjDir.Replace(" ", "");
+                txtBaseHboa.Text = config.Hboa.Replace(" ", "");
+                txtBaseInitPop.Text = config.InitPop.ToString().Replace(" ", "");
+                txtBaseMaxGen.Text = config.MaxGens.ToString().Replace(" ", "");
+                txtBaseMaxPop.Text = config.MaxPop.ToString().Replace(" ", "");
+                txtBaseMinPop.Text = config.MinPop.ToString().Replace(" ", "");
+                txtBaseNumBin.Text = config.NBin.ToString().Replace(" ", "");
+                txtBaseNumConds.Text = config.NCons.ToString().Replace(" ", "");
+                txtBaseNumObj.Text = config.NObj.ToString().Replace(" ", "");
+                txtBaseNumReal.Text = config.NReal.ToString().Replace(" ", "");
+                txtBaseNumTag.Text = config.NTagAlong.ToString().Replace(" ", "");
+                txtBasePopFactor.Text = config.PopFactor.ToString().Replace(" ", "");
+                txtBasePopScheme.Text = config.PopScheme.Replace(" ", "");
+                txtTestProblem.Text = config.TestProblem;
 
-            refreshComboList(list, cbobj);
-            list.Clear();
+                var list = new List<int>();
 
-            txtSeriesLength.Text = config.NData.ToString().Replace(" ", "");
-            txtndata.Text = config.NAObj.ToString().Replace(" ", "");
+                for (int i = 1; i <= config.NObj; i++)
+                    list.Add(i);
 
-            for (int i = 1; i <= config.NAObj; i++)
-                list.Add(i);
+                refreshComboList(list, cbobj);
+                list.Clear();
 
-            refreshComboList(list, cbDemo);
-            list.Clear();
+                txtSeriesLength.Text = config.NData.ToString().Replace(" ", "");
+                txtndata.Text = config.NAObj.ToString().Replace(" ", "");
 
-            txtncon.Text = config.NConst.ToString().Replace(" ", "");
+                for (int i = 1; i <= config.NAObj; i++)
+                    list.Add(i);
 
-            for (int i = 1; i <= config.NConst; i++)
-                list.Add(i);
+                refreshComboList(list, cbDemo);
+                list.Clear();
 
-            refreshComboList(list, cbCon);
-            list.Clear();
+                txtncon.Text = config.NConst.ToString().Replace(" ", "");
 
-            txtNreal.Text = config.NReal.ToString().Replace(" ", "");
+                for (int i = 1; i <= config.NConst; i++)
+                    list.Add(i);
 
-            for (int i = 1; i <= config.NReal; i++)
-                list.Add(i);
+                refreshComboList(list, cbCon);
+                list.Clear();
 
-            refreshComboList(list, cbReal);
-            list.Clear();
+                txtNreal.Text = config.NReal.ToString().Replace(" ", "");
 
-            txtRealPseudo.Text = config.PseudoBinary.Replace(" ", "");
-            txtRealCross.Text = config.RealCrossProb.ToString().Replace(" ", "");
-            txtRealDec.Enabled = false;
-            txtRealLimits.Text = config.RealLimits.Replace(" ", "");
-            txtRealMut.Text = config.RealMutProb.ToString().Replace(" ", "");
-            txtRealPoly.Text = config.DistIndexPoly.ToString().Replace(" ", "");
-            txtRealSbx.Text = config.DistIndexSBX.ToString().Replace(" ", "");
+                for (int i = 1; i <= config.NReal; i++)
+                    list.Add(i);
 
-            txtNbin.Text = config.NBin.ToString().Replace(" ", "");
-            txtBinLimit.Text = config.BinLimits ? "same" : "different";
-            txtBinCross.Text = config.BinCrossProb.ToString().Replace(" ", "");
-            txtBinType.Text = config.BinCrossType.Replace(" ", "");
-            txtBinMut.Text = config.BinMutProb.ToString().Replace(" ", "");
-            txtBinMutType.Text = config.BinMutType.Replace(" ", "");
+                refreshComboList(list, cbReal);
+                list.Clear();
 
-            for (var i = 1; i <= config.NBin; i++)
-                list.Add(i);
+                txtRealPseudo.Text = config.PseudoBinary.Replace(" ", "");
+                txtRealCross.Text = config.RealCrossProb.ToString().Replace(" ", "");
+                txtRealDec.Enabled = false;
+                txtRealLimits.Text = config.RealLimits.Replace(" ", "");
+                txtRealMut.Text = config.RealMutProb.ToString().Replace(" ", "");
+                txtRealPoly.Text = config.DistIndexPoly.ToString().Replace(" ", "");
+                txtRealSbx.Text = config.DistIndexSBX.ToString().Replace(" ", "");
 
-            refreshComboList(list, cbBin);
-            list.Clear();
+                txtNbin.Text = config.NBin.ToString().Replace(" ", "");
+                txtBinLimit.Text = config.BinLimits ? "same" : "different";
+                txtBinCross.Text = config.BinCrossProb.ToString().Replace(" ", "");
+                txtBinType.Text = config.BinCrossType.Replace(" ", "");
+                txtBinMut.Text = config.BinMutProb.ToString().Replace(" ", "");
+                txtBinMutType.Text = config.BinMutType.Replace(" ", "");
 
-            txtTInterDelta.Text = config.InterDelta.ToString().Replace(" ", "");
-            txtTInterRun.Text = config.InterRun.ToString().Replace(" ", "");
-            txtTIntraDelta.Text = config.IntraDelta.ToString().Replace(" ", "");
-            txtTIntraRun.Text = config.IntraRun.ToString().Replace(" ", "");
-            txtTMaxEperf.Text = config.MaxEperf.ToString().Replace(" ", "");
-            txtTMaxNfe.Text = config.MaxNfe.ToString().Replace(" ", "");
-            txtTMaxTime.Text = config.MaxTime.ToString().Replace(" ", "");
+                for (var i = 1; i <= config.NBin; i++)
+                    list.Add(i);
 
-            txtPConv.Text = config.Conv.Replace(" ", "");
-            txtPDiv.Text = config.Div.Replace(" ", "");
-            txtPEperf.Text = config.Eperf.ToString().Replace(" ", "");
-            txtPEdom.Text = config.EdomEperf.ToString().Replace(" ", "");
-            txtPEind.Text = config.Eind.ToString().Replace(" ", "");
-            txtPEindError.Text = config.EindError.ToString().Replace(" ", "");
-            txtPMetricRef.Text = config.MetricRef.ToString().Replace(" ", "");
+                refreshComboList(list, cbBin);
+                list.Clear();
 
-            for (var i = 1; i <= 4; i++)
-                list.Add(i);
+                txtTInterDelta.Text = config.InterDelta.ToString().Replace(" ", "");
+                txtTInterRun.Text = config.InterRun.ToString().Replace(" ", "");
+                txtTIntraDelta.Text = config.IntraDelta.ToString().Replace(" ", "");
+                txtTIntraRun.Text = config.IntraRun.ToString().Replace(" ", "");
+                txtTMaxEperf.Text = config.MaxEperf.ToString().Replace(" ", "");
+                txtTMaxNfe.Text = config.MaxNfe.ToString().Replace(" ", "");
+                txtTMaxTime.Text = config.MaxTime.ToString().Replace(" ", "");
 
-            refreshComboList(list, cbPerf);
-            list.Clear();
+                txtPConv.Text = config.Conv.Replace(" ", "");
+                txtPDiv.Text = config.Div.Replace(" ", "");
+                txtPEperf.Text = config.Eperf.ToString().Replace(" ", "");
+                txtPEdom.Text = config.EdomEperf.ToString().Replace(" ", "");
+                txtPEind.Text = config.Eind.ToString().Replace(" ", "");
+                txtPEindError.Text = config.EindError.ToString().Replace(" ", "");
+                txtPMetricRef.Text = config.MetricRef.ToString().Replace(" ", "");
 
-            txtTimerInt.Text = config.TimerInterval.ToString().Replace(" ", "");
-            txtOutHead.Text = config.OutHeaders.Replace(" ", "");
-            txtOutInt.Text = config.OutInterval.ToString();
-            txtOutDir.Text = config.OutDir.Remove(0, 1).Remove(config.OutDir.ToString().Length - 2, 1);
-            txtNondom.Text = config.NondomInterval.ToString().Replace(" ", "");
-            txtAllFinal.Text = config.AllFinal ? "on" : "off";
-            txtNondomFinal.Text = config.NondomFinal ? "on" : "off";
-            txtStatsInt.Text = config.StatsInterval.ToString().Replace(" ", "");
-            txtVtkInt.Text = config.VtkInterval.ToString().Replace(" ", "");
-            txtVtkFlag.Text = config.SmallFlag.Replace(" ", "");
-            txtRsStats.Text = config.RsStats.ToString().Replace(" ", "");
+                for (var i = 1; i <= 4; i++)
+                    list.Add(i);
+
+                refreshComboList(list, cbPerf);
+                list.Clear();
+
+                txtTimerInt.Text = config.TimerInterval.ToString().Replace(" ", "");
+                txtOutHead.Text = config.OutHeaders.Replace(" ", "");
+                txtOutInt.Text = config.OutInterval.ToString();
+                txtOutDir.Text = config.OutDir.Remove(0, 1).Remove(config.OutDir.ToString().Length - 2, 1);
+                txtNondom.Text = config.NondomInterval.ToString().Replace(" ", "");
+                txtAllFinal.Text = config.AllFinal ? "on" : "off";
+                txtNondomFinal.Text = config.NondomFinal ? "on" : "off";
+                txtStatsInt.Text = config.StatsInterval.ToString().Replace(" ", "");
+                txtVtkInt.Text = config.VtkInterval.ToString().Replace(" ", "");
+                txtVtkFlag.Text = config.SmallFlag.Replace(" ", "");
+                txtRsStats.Text = config.RsStats.ToString().Replace(" ", "");
+            }
+            catch { }
+
         }
 
         private void txtRealLimits_TextChanged(object sender, EventArgs e)
@@ -1368,6 +1388,9 @@ namespace DEMOGUI
 
         public static string Base64Decode(string base64EncodedData)
         {
+            if (base64EncodedData == null)
+                return String.Empty;
+
             var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
             return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
         }

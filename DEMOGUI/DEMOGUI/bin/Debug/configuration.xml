@@ -3,8 +3,8 @@
   <parallel> serial </parallel>
   <linearInput></linearInput>
   <license> ZGFuLmxhbXBtYW5AZ21haWwuY29tdGV0aHlzKjIwMTYtMDEtMTI= </license>
-  <entropyDir> C:\Users\Dan\Documents\DEMO\DEMO_TODO\Input.csv </entropyDir>
-  <objDir> C:\Users\Dan\Downloads\add_objectives.in </objDir>
+  <entropyDir> </entropyDir>
+  <objDir> </objDir>
   <debug_mode> on </debug_mode>
   <use_hboa> on </use_hboa>
   <initial_popsize> 10000 </initial_popsize>

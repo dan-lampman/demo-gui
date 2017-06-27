@@ -380,7 +380,7 @@ namespace DEMOGUI
             xmlInput += AddNewPropertyValue("initial_popsize", InitPop.ToString());
             xmlInput += AddNewPropertyValue("min_popsize", MinPop.ToString());
             xmlInput += AddNewPropertyValue("max_popsize", MaxPop.ToString());
-            xmlInput += AddNewPropertyValue("popsize_scheme", PopScheme.ToString());
+            xmlInput += AddNewPropertyValue("popsize_scheme", PopScheme);
             xmlInput += AddNewPropertyValue("pop_scaling_factor", PopFactor.ToString());
             xmlInput += AddNewPropertyValue("max_gens", MaxGens.ToString());
 
@@ -415,16 +415,19 @@ namespace DEMOGUI
             //Real Decision Variables
 
             xmlInput += AddNewPropertyValue("nreal", NReal.ToString());
-            xmlInput += AddNewPropertyValue("real_pseudo_binary", PseudoBinary.ToString());
-            xmlInput += AddNewPropertyValue("real_limits", RealLimits.ToString());
+            xmlInput += AddNewPropertyValue("real_pseudo_binary", PseudoBinary);
+            xmlInput += AddNewPropertyValue("real_limits", RealLimits);
 
-            for (int i = 1; i <= RealTag.Count(); i++)
+            if (RealTag != null)
             {
-                xmlInput += AddNewPropertyValue("real_tag" + i, RealTag[i-1].ToString());
-                xmlInput += AddNewPropertyValue("real_min" + i, RealMin[i-1].ToString());
-                xmlInput += AddNewPropertyValue("real_max" + i, RealMax[i-1].ToString());
-            }            
-            
+                for (int i = 1; i <= RealTag.Count(); i++)
+                {
+                    xmlInput += AddNewPropertyValue("real_tag" + i, RealTag[i - 1].ToString());
+                    xmlInput += AddNewPropertyValue("real_min" + i, RealMin[i - 1].ToString());
+                    xmlInput += AddNewPropertyValue("real_max" + i, RealMax[i - 1].ToString());
+                }
+            }
+                    
             xmlInput += AddNewPropertyValue("real_cross_prob", RealCrossProb.ToString());
             xmlInput += AddNewPropertyValue("real_mut_prob", RealMutProb.ToString());
             xmlInput += AddNewPropertyValue("dist_index_sbx", DistIndexSBX.ToString());
@@ -444,15 +447,15 @@ namespace DEMOGUI
             }
 
             xmlInput += AddNewPropertyValue("bin_cross_prob", BinCrossProb.ToString());
-            xmlInput += AddNewPropertyValue("bin_cross_type", BinCrossType.ToString());
+            xmlInput += AddNewPropertyValue("bin_cross_type", BinCrossType);
             xmlInput += AddNewPropertyValue("bin_mut_prob", BinMutProb.ToString());
-            xmlInput += AddNewPropertyValue("bin_mut_type", BinMutType.ToString());
+            xmlInput += AddNewPropertyValue("bin_mut_type", BinMutType);
 
             //Soft Termination Criteria
 
-            xmlInput += AddNewPropertyValue("inter_run", InterRun.ToString());
+            xmlInput += AddNewPropertyValue("inter_run", InterRun);
             xmlInput += AddNewPropertyValue("inter_delta", InterDelta.ToString());
-            xmlInput += AddNewPropertyValue("intra_run", IntraRun.ToString());
+            xmlInput += AddNewPropertyValue("intra_run", IntraRun);
             xmlInput += AddNewPropertyValue("inter_delta", IntraDelta.ToString());
 
             //Hard Termination Criteria
@@ -463,29 +466,35 @@ namespace DEMOGUI
 
             //Performance Metrics
 
-            xmlInput += AddNewPropertyValue("conv", Conv.ToString());
-            xmlInput += AddNewPropertyValue("div", Div.ToString());
-            xmlInput += AddNewPropertyValue("eperf", Eperf.ToString());
-            xmlInput += AddNewPropertyValue("edom_eperf", EdomEperf.ToString());
+            xmlInput += AddNewPropertyValue("conv", Conv);
+            xmlInput += AddNewPropertyValue("div", Div);
+            xmlInput += AddNewPropertyValue("eperf", Eperf);
+            xmlInput += AddNewPropertyValue("edom_eperf", EdomEperf);
 
-            for (int i = 1; i <= DivGrid.Count; i++)
+            if (DivGrid != null)
             {
-                xmlInput += AddNewPropertyValue("div_grid" + i, DivGrid[i-1].ToString());
+                for (int i = 1; i <= DivGrid.Count; i++)
+                {
+                    xmlInput += AddNewPropertyValue("div_grid" + i, DivGrid[i - 1].ToString());
+                }
+            }
+            
+            if (EperfEps !=  null)
+            {
+                for (int i = 1; i <= EperfEps.Count; i++)
+                {
+                    xmlInput += AddNewPropertyValue("eperf_eps" + i, EperfEps[i - 1].ToString());
+                }
             }
 
-            for (int i = 1; i <= EperfEps.Count; i++)
-            {
-                xmlInput += AddNewPropertyValue("eperf_eps" + i, EperfEps[i-1].ToString());
-            }
-
-            xmlInput += AddNewPropertyValue("eind", Eind.ToString());
+            xmlInput += AddNewPropertyValue("eind", Eind);
             xmlInput += AddNewPropertyValue("eind_error", EindError.ToString());
-            xmlInput += AddNewPropertyValue("metric_ref", MetricRef.ToString());
+            xmlInput += AddNewPropertyValue("metric_ref", MetricRef);
 
             //Local File Output
 
-            xmlInput += AddNewPropertyValue("out_dir", OutDir.ToString());
-            xmlInput += AddNewPropertyValue("out_headers", OutHeaders.ToString());
+            xmlInput += AddNewPropertyValue("out_dir", OutDir);
+            xmlInput += AddNewPropertyValue("out_headers", OutHeaders);
             xmlInput += AddNewPropertyValue("out_all", OutAll ? OutInterval.ToString() : "0");
             xmlInput += AddNewPropertyValue("out_nondom", Nondom ? NondomInterval.ToString() : "0");
             xmlInput += AddNewPropertyValue("out_all_final", AllFinal ? "on" : "off");
@@ -494,7 +503,7 @@ namespace DEMOGUI
             xmlInput += AddNewPropertyValue("out_rs", RsStats ? "on" : "off");
             xmlInput += AddNewPropertyValue("out_timer", TimerInterval.ToString());
             xmlInput += AddNewPropertyValue("out_vtk", VtkInterval.ToString());
-            xmlInput += AddNewPropertyValue("out_vtk_sflag", SmallFlag.ToString());
+            xmlInput += AddNewPropertyValue("out_vtk_sflag", SmallFlag);
 
 
             //DEMO Parameters
