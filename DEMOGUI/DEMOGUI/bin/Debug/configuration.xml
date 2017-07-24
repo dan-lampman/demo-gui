@@ -3,8 +3,8 @@
   <parallel> serial </parallel>
   <linearInput></linearInput>
   <license> ZGFuLmxhbXBtYW5AZ21haWwuY29tdGV0aHlzKjIwMTYtMDEtMTI= </license>
-  <entropyDir> </entropyDir>
-  <objDir> </objDir>
+  <entropyDir> \\Mac\Home\Downloads\Input.csv </entropyDir>
+  <objDir></objDir>
   <debug_mode> on </debug_mode>
   <use_hboa> on </use_hboa>
   <initial_popsize> 10000 </initial_popsize>

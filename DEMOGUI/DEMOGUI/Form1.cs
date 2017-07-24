@@ -18,6 +18,7 @@ using GMap.NET.Properties;
 using GMap.NET.WindowsForms;
 using System.Xml.Linq;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 namespace DEMOGUI
 {
@@ -34,6 +35,7 @@ namespace DEMOGUI
         public List<List<double>> linearCoords;
         public List<List<int>> data;
         public List<List<int>> linearData;
+        public PointLatLng map1Center;
         public int numSelectedPoints;
         public string statsPath;
         public string outPath;
@@ -1192,20 +1194,11 @@ namespace DEMOGUI
         {
 
             GMapOverlay markersOverlay = new GMapOverlay("markers");
-            //GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(43.7000, -79.4000),
-            //  GMarkerGoogleType.green);
-            //GMarkerGoogle marker1 = new GMarkerGoogle(new PointLatLng(43.260928, -79.91933),
-            //  GMarkerGoogleType.blue);
-            //GMarkerGoogle marker2 = new GMarkerGoogle(new PointLatLng(51.0486, -114.0708),
-            //  GMarkerGoogleType.red);
-
             GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(Convert.ToDouble(inputLat), Convert.ToDouble(inputLng)),
               colour);
 
 
             markersOverlay.Markers.Add(marker);
-            //markersOverlay.Markers.Add(marker1);
-            //markersOverlay.Markers.Add(marker2);
 
             if (gmap1.Overlays.Count == 0)
                 gmap1.Overlays.Add(markersOverlay);
@@ -1227,13 +1220,6 @@ namespace DEMOGUI
         {
 
             GMapOverlay markersOverlay = new GMapOverlay("markers");
-            //GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(43.7000, -79.4000),
-            //  GMarkerGoogleType.green);
-            //GMarkerGoogle marker1 = new GMarkerGoogle(new PointLatLng(43.260928, -79.91933),
-            //  GMarkerGoogleType.blue);
-            //GMarkerGoogle marker2 = new GMarkerGoogle(new PointLatLng(51.0486, -114.0708),
-            //  GMarkerGoogleType.red);
-
             GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(Convert.ToDouble(inputLat), Convert.ToDouble(inputLng)),
               GMarkerGoogleType.green);
 
@@ -1261,17 +1247,13 @@ namespace DEMOGUI
 
         private void centerMap1()
         {
-            if (gmap1.Overlays.FirstOrDefault() == null)
-                return;
-
-
-            gmap1.Zoom = 20;
+            gmap1.Zoom = 15;
 
             if (gmap1.Overlays.FirstOrDefault() == null)
+            {
                 return;
-
-
-            gmap1.Position = gmap1.Overlays.FirstOrDefault().Markers.FirstOrDefault().Position;
+            }
+                        
             var posLat = Math.Abs(Convert.ToDecimal(gmap1.Position.Lat));
             var posLng = Math.Abs(Convert.ToDecimal(gmap1.Position.Lng));
             var viewLat = Convert.ToDecimal(gmap1.ViewArea.HeightLat);
@@ -1282,8 +1264,7 @@ namespace DEMOGUI
             if (gmap1.Overlays.Count == 0 || gmap1.Overlays.FirstOrDefault().Markers == null)
                 return;
 
-
-            foreach (var marker in gmap1.Overlays.FirstOrDefault().Markers)
+            foreach (var marker in gmap1.Overlays.Where(z => z.Id == "markers").FirstOrDefault().Markers)
             {
                 var lng = Math.Abs(Convert.ToDecimal(marker.Position.Lng));
                 var lat = Math.Abs(Convert.ToDecimal(marker.Position.Lat));
@@ -1313,9 +1294,10 @@ namespace DEMOGUI
             }
 
             gmap1.Zoom = gmap1.Zoom - 1;
+            var markersCount = gmap1.Overlays.Where(z => z.Id == "markers").FirstOrDefault().Markers.Count;
 
-            x = x / gmap1.Overlays.FirstOrDefault().Markers.Count;
-            y = y / gmap1.Overlays.FirstOrDefault().Markers.Count;
+            x = x / markersCount;
+            y = y / markersCount;
 
             gmap1.Position = new PointLatLng(Convert.ToDouble(y), Convert.ToDouble(x));
         }
@@ -1495,6 +1477,53 @@ namespace DEMOGUI
 
         } 
 
+        private void assignMap1Weights()
+        {
+            var weightedPoints = new List<List<double>>();
+            string pathDir = config.OutDir;
+
+            if (config.OutDir.ElementAt(0) == 32 && config.OutDir.ElementAt(1) == 46)
+            {
+                pathDir = pathDir.Replace('/', '\\');
+                pathDir = pathDir.Replace('.', '\\');
+                pathDir = Directory.GetCurrentDirectory() + pathDir;
+            }
+
+            DemoUtil.ImportDataFromCS(pathDir + "\\final_nondom_pop.out", weightedPoints, numSelectedPoints);
+
+            if (weightedPoints.Count() > 0)
+            {
+                assignMapWeights(weightedPoints);
+            }
+
+            var a = new List<double>();
+            var b = new List<double>();
+            var c = new List<double>();
+
+
+            DemoUtil.ImportGraphDataFromCS(pathDir + "\\final_nondom_pop.out", a, b, c);
+
+            var x = a.ToArray();
+            var y = b.ToArray();
+            var z = c.ToArray();
+
+            for (var i = 0; i < a.Count(); i++)
+            {
+                outputChart.Series["OutputXY"].Points.AddXY(x[i], y[i]);
+                outputChart.Series["OutputXZ"].Points.AddXY(x[i], z[i]);
+                outputChart.Series["OutputYZ"].Points.AddXY(y[i], z[i]);
+
+                outputChart.Series["OutputXY"].BorderWidth = 10;
+                outputChart.Series["OutputXZ"].BorderWidth = 10;
+                outputChart.Series["OutputYZ"].BorderWidth = 10;
+
+
+            }
+
+            tabControl2.SelectedIndex = 2;
+            centerMap1();
+        }
+
         private void addPointsMap1(List<List<double>> input)
         {
             var pointsList = new List<PointLatLng>();
@@ -1505,8 +1534,9 @@ namespace DEMOGUI
                 pointsList.Add(new PointLatLng(input[0][i], input[1][i]));
             }
 
+            map1Center = pointsList.FirstOrDefault();
             listBoxPoints.DataSource = pointsList;
-
+            assignMap1Weights();
             centerMap1();            
         }
 
@@ -1697,44 +1727,85 @@ namespace DEMOGUI
            
             var points = new List<PointLatLng>();
 
-            foreach (var markers in gmap1.Overlays.FirstOrDefault().Markers)
+            if (gmap1.Overlays.FirstOrDefault() != null)
             {
-
-                foreach(var marker in markers.Overlay.Markers)
+                foreach (var markers in gmap1.Overlays.FirstOrDefault().Markers)
                 {
-                    points.Add(marker.Position);                  
+
+                    foreach (var marker in markers.Overlay.Markers)
+                    {
+                        points.Add(marker.Position);
+                    }
                 }
             }
+            
 
             var pointsArray = points.ToArray();
             GMapOverlay markersOverlay = new GMapOverlay("markers");
+            GMapOverlay polygons = new GMapOverlay("polygons");
             gmap1.Overlays.Remove(gmap1.Overlays.FirstOrDefault());
 
             for (var i = 0; i < weightSums.Count(); i++)
             {
                 var colour = GMarkerGoogleType.green;
+                var penColour = Pens.Green;
 
                 if (weightSums[i] >= 0.9)
                 {
                     colour = GMarkerGoogleType.red;
+                    penColour = Pens.Red;
                 }
                 else if(weightSums[i] >= 0.5)
                 {
                     colour = GMarkerGoogleType.yellow;
+                    penColour = Pens.Yellow;
                 }
                 else if (weightSums[i] >= 0.2)
                 {
                     colour = GMarkerGoogleType.blue;
-                }    
+                    penColour = Pens.Blue;
+                }
 
-                GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(pointsArray[i].Lat, pointsArray[i].Lng), colour);
-                markersOverlay.Markers.Add(marker);
-
+                //GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(pointsArray[i].Lat, pointsArray[i].Lng), colour);
+                //markersOverlay.Markers.Add(marker);
+                markersOverlay.Markers.Add(new GMapPoint(new PointLatLng(pointsArray[i].Lat, pointsArray[i].Lng), 12, penColour));
+                GMapOverlay _points = new GMapOverlay("pointsCollection");
             }
 
+
+            gmap1.Overlays.Add(polygons);
             gmap1.Overlays.Add(markersOverlay);
-            
-        }      
+
+        }
+
+        public void DrawGradient(int x, int y, Graphics g)
+        {
+            using (var ellipsePath = new GraphicsPath())
+            {
+                var bounds = new Rectangle(x, y, 100, 100);
+                ellipsePath.AddEllipse(bounds);
+                var brush = new PathGradientBrush(ellipsePath);
+                Color[] colors = {
+                    Color.FromArgb(64, 0, 0, 255),
+                    Color.FromArgb(140, 0, 255, 0),
+                    Color.FromArgb(216, 255, 255, 0),
+                    Color.FromArgb(255, 255, 0, 0)
+                };
+                float[] relativePositions = { 0f, 0.25f, 0.5f, 1.0f };
+                ColorBlend colorBlend = new ColorBlend();
+                colorBlend.Colors = colors;
+                colorBlend.Positions = relativePositions;
+                brush.InterpolationColors = colorBlend;
+
+                g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
+                g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+
+                g.FillEllipse(brush, bounds);
+            }
+        }
 
         private void btnLoadDemoOutput_Click_2(object sender, EventArgs e)
         {
