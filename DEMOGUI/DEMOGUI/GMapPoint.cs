@@ -35,10 +35,6 @@ namespace DEMOGUI
 
         public override void OnRender(Graphics g)
         {
-            //g.FillRectangle(Brushes.Black, LocalPosition.X, LocalPosition.Y, size_, size_);
-            //OR 
-            
-            //g.DrawEllipse(color, LocalPosition.X, LocalPosition.Y, size, size);
             LinearGradientBrush br = new LinearGradientBrush(new Point(0, 0), new Point(10, 10), Color.Black, Color.Black);
             ColorBlend cb = new ColorBlend();
 
@@ -65,8 +61,6 @@ namespace DEMOGUI
             br.RotateTransform(180);
             var centerPoint = new Point(LocalPosition.X - (Convert.ToInt32(size / 2)), LocalPosition.Y - Convert.ToInt32((size / 1)));
             g.FillEllipse(br, new Rectangle(centerPoint, new Size(Convert.ToInt32(size), Convert.ToInt32(size))));
-            //OR whatever you need
-
         }
     }
 }
