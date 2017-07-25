@@ -1454,6 +1454,12 @@ namespace DEMOGUI
 
         private void btnLinearImport_Click(object sender, EventArgs e)
         {
+            if (!File.Exists(config.LinearInput))
+            {
+                MessageBox.Show("Unable to read Linear Input file: " + config.LinearInput, "I/O Error");
+                return;
+            }
+
             if (linearCoords == null)
                 linearCoords = new List<List<Double>>();
 
@@ -1486,10 +1492,13 @@ namespace DEMOGUI
             {
                 pathDir = pathDir.Replace('/', '\\');
                 pathDir = pathDir.Replace('.', '\\');
+                pathDir = pathDir.Replace("\\ ", "\\");
                 pathDir = Directory.GetCurrentDirectory() + pathDir;
+                pathDir = pathDir.Replace(" \\", "\\");
+
             }
 
-            DemoUtil.ImportDataFromCS(pathDir + "\\final_nondom_pop.out", weightedPoints, numSelectedPoints);
+            DemoUtil.ImportDataFromCS(pathDir + "final_nondom_pop.out", weightedPoints, numSelectedPoints);
 
             if (weightedPoints.Count() > 0)
             {
@@ -1501,7 +1510,7 @@ namespace DEMOGUI
             var c = new List<double>();
 
 
-            DemoUtil.ImportGraphDataFromCS(pathDir + "\\final_nondom_pop.out", a, b, c);
+            DemoUtil.ImportGraphDataFromCS(pathDir + "final_nondom_pop.out", a, b, c);
 
             var x = a.ToArray();
             var y = b.ToArray();
@@ -1768,43 +1777,13 @@ namespace DEMOGUI
 
                 //GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(pointsArray[i].Lat, pointsArray[i].Lng), colour);
                 //markersOverlay.Markers.Add(marker);
-                markersOverlay.Markers.Add(new GMapPoint(new PointLatLng(pointsArray[i].Lat, pointsArray[i].Lng), 12, penColour));
-                GMapOverlay _points = new GMapOverlay("pointsCollection");
+                markersOverlay.Markers.Add(new GMapPoint(new PointLatLng(pointsArray[i].Lat, pointsArray[i].Lng), 25, penColour));
             }
 
 
             gmap1.Overlays.Add(polygons);
             gmap1.Overlays.Add(markersOverlay);
 
-        }
-
-        public void DrawGradient(int x, int y, Graphics g)
-        {
-            using (var ellipsePath = new GraphicsPath())
-            {
-                var bounds = new Rectangle(x, y, 100, 100);
-                ellipsePath.AddEllipse(bounds);
-                var brush = new PathGradientBrush(ellipsePath);
-                Color[] colors = {
-                    Color.FromArgb(64, 0, 0, 255),
-                    Color.FromArgb(140, 0, 255, 0),
-                    Color.FromArgb(216, 255, 255, 0),
-                    Color.FromArgb(255, 255, 0, 0)
-                };
-                float[] relativePositions = { 0f, 0.25f, 0.5f, 1.0f };
-                ColorBlend colorBlend = new ColorBlend();
-                colorBlend.Colors = colors;
-                colorBlend.Positions = relativePositions;
-                brush.InterpolationColors = colorBlend;
-
-                g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
-                g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
-
-                g.FillEllipse(brush, bounds);
-            }
         }
 
         private void btnLoadDemoOutput_Click_2(object sender, EventArgs e)

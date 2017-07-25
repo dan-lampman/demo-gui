@@ -4,7 +4,7 @@
   <linearInput></linearInput>
   <license> ZGFuLmxhbXBtYW5AZ21haWwuY29tdGV0aHlzKjIwMTYtMDEtMTI= </license>
   <entropyDir> \\Mac\Home\Downloads\Input.csv </entropyDir>
-  <objDir></objDir>
+  <objDir>\\Mac\Home\Google Drive\Work\McMaster\DEMO\DEMO_Windows\DEMO_UpdateV1.40\Test\DEMO\output_entropy_hboa_2006-2010\final_nondom_pop.out</objDir>
   <debug_mode> on </debug_mode>
   <use_hboa> on </use_hboa>
   <initial_popsize> 10000 </initial_popsize>

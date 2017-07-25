@@ -35,32 +35,50 @@ namespace DEMOGUI
 
         public override void OnRender(Graphics g)
         {
-            LinearGradientBrush br = new LinearGradientBrush(new Point(0, 0), new Point(10, 10), Color.Black, Color.Black);
-            ColorBlend cb = new ColorBlend();
+            //LinearGradientBrush br = new LinearGradientBrush(new Point(0, 0), new Point(10, 10), Color.Black, Color.Black);
+            //ColorBlend cb = new ColorBlend();
+            Color intColor = Color.Green;
 
             if (color == Pens.Blue)
             {
-                cb.Positions = new[] { 0f, 1 };
-                cb.Colors = new[] { Color.Green, Color.Blue };
+                intColor = Color.Blue;
             }
             else if (color == Pens.Yellow)
             {
-                cb.Positions = new[] { 0f, 0.5f, 1 };
-                cb.Colors = new[] { Color.Green, Color.Blue, Color.Yellow };
+                intColor = Color.Yellow;
             }
             else if (color == Pens.Red)
             {
-                cb.Positions = new[] { 0, 1 / 3f, 2 / 3f, 1 };
-                cb.Colors = new[] { Color.Green, Color.Yellow, Color.Orange, Color.Red };
+                intColor = Color.Red;
             }
-                        
-            if (color != Pens.Green)
-            {
-                br.InterpolationColors = cb;
-            }
-            br.RotateTransform(180);
-            var centerPoint = new Point(LocalPosition.X - (Convert.ToInt32(size / 2)), LocalPosition.Y - Convert.ToInt32((size / 1)));
-            g.FillEllipse(br, new Rectangle(centerPoint, new Size(Convert.ToInt32(size), Convert.ToInt32(size))));
+
+            //if (color != Pens.Green)
+            //{
+            //    br.InterpolationColors = cb;
+            //}
+            //br.RotateTransform(180);
+            //var centerPoint = new Point(LocalPosition.X - (Convert.ToInt32(size / 2)), LocalPosition.Y - Convert.ToInt32((size / 2)));
+            var centerPoint = new Point(LocalPosition.X / 2, LocalPosition.Y / 2);
+
+            GraphicsPath gp = new GraphicsPath();
+            gp.AddEllipse(new Rectangle(centerPoint, new Size(Convert.ToInt32(size), Convert.ToInt32(size))));
+
+            PathGradientBrush pgb = new PathGradientBrush(gp);
+
+            pgb.CenterPoint = centerPoint;
+            pgb.CenterColor = intColor;
+            pgb.SurroundColors = new Color[] { Color.Green };
+            pgb.SetBlendTriangularShape(.5f, 1.0f);
+            pgb.FocusScales = new PointF(0f, 0f);
+
+            g.FillPath(pgb, gp);
+
+            pgb.Dispose();
+            gp.Dispose();
+
+
+
+            //g.FillEllipse(br, new Rectangle(centerPoint, new Size(Convert.ToInt32(size), Convert.ToInt32(size))));
         }
     }
 }
