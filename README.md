@@ -3,7 +3,7 @@
 
 ### Support or Contact
 
-dan.lampman@gmail.com
+dan.lampman@blueharvest.dev
 
 
 ![figure1 demo methodology](https://user-images.githubusercontent.com/30629952/29752292-4d2308a8-8b29-11e7-9a4d-505f4c0dc8ad.png)
